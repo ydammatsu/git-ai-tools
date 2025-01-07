@@ -10,6 +10,8 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
+var maxMessageLength = 60
+
 func main() {
 	// Get the OpenAI API key from environment variables
 	token := os.Getenv("OPENAI_API_KEY")
@@ -35,7 +37,8 @@ func main() {
 
 	// Prepare the prompt
 	prompt := fmt.Sprintf(
-		"You are super engineer. Based on the following git diff, generate a one-liner commit message with an emoji at the beginning (in English, within 100 characters):\n%s",
+		"You are a super engineer. Based on the following git diff, generate a one-liner commit message with an emoji at the beginning that matches the content (in English, within %d characters):\n%s",
+		maxMessageLength,
 		gitDiff,
 	)
 
