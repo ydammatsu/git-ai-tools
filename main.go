@@ -15,7 +15,7 @@ func main() {
 	token := os.Getenv("OPENAI_API_KEY")
 	if token == "" {
 		fmt.Println("Error: OPENAI_API_KEY environment variable is not set.")
-		return
+		os.Exit(1) // Get token Errror
 	}
 
 	// Run `git diff` command
@@ -23,19 +23,19 @@ func main() {
 	gitDiffOutput, err := cmd.Output()
 	if err != nil {
 		fmt.Printf("Error running `git diff`: %v\n", err)
-		return
+		os.Exit(1) // Git diff error
 	}
 
 	// Trim and format the git diff output
 	gitDiff := strings.TrimSpace(string(gitDiffOutput))
 	if gitDiff == "" {
 		fmt.Println("No changes detected in `git diff`. Please ensure you have staged or modified files.")
-		return
+		os.Exit(1) // No changes in git diff
 	}
 
 	// Prepare the prompt
 	prompt := fmt.Sprintf(
-		"Based on the following git diff, generate a one-liner commit message with an emoji at the beginning (in English, within 100 characters):\n%s",
+		"You are super engineer. Based on the following git diff, generate a one-liner commit message with an emoji at the beginning (in English, within 100 characters):\n%s",
 		gitDiff,
 	)
 
@@ -58,10 +58,8 @@ func main() {
 
 	if err != nil {
 		fmt.Printf("ChatCompletion error: %v\n", err)
-		return
+		os.Exit(1) // ChatCompletion error
 	}
 
-	// Print the generated commit message
-	fmt.Println("Generated Commit Message:")
 	fmt.Println(resp.Choices[0].Message.Content)
 }
