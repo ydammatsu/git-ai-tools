@@ -19,7 +19,7 @@ func main() {
 	}
 
 	// Run `git diff` command
-	cmd := exec.Command("git", "diff")
+	cmd := exec.Command("git", "diff", "HEAD")
 	gitDiffOutput, err := cmd.Output()
 	if err != nil {
 		fmt.Printf("Error running `git diff`: %v\n", err)
