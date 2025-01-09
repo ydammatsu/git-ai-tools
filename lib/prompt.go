@@ -21,3 +21,10 @@ func GetGitHubTitlePrompt(gitDiff string) string {
 		gitDiff,
 	)
 }
+
+func GetGitHubBodyPrompt(gitDiff string, jiraLink string) string {
+	return fmt.Sprintf(
+		"Generate a GitHub issue body based on the following git diff (in English):\n%s",
+		gitDiff,
+	)
+}
