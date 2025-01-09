@@ -23,8 +23,22 @@ func GetGitHubTitlePrompt(gitDiff string) string {
 }
 
 func GetGitHubBodyPrompt(gitDiff string, jiraLink string) string {
+	// Generate the instruction prompt
+	format := `Based on the following git diff, generate a Markdown document with the following structure:
+
+## Jira
+%s
+
+## What
+From the provided git diff, extract and summarize 1 to 3 key points describing the changes made. Ensure these are concise, relevant, and easy to understand.
+
+## Why
+Leave this section empty.
+
+Here is the git diff: %s`
 	return fmt.Sprintf(
-		"Generate a GitHub issue body based on the following git diff (in English):\n%s",
+		format,
+		jiraLink,
 		gitDiff,
 	)
 }
