@@ -8,13 +8,40 @@ import (
 )
 
 func main() {
-	message, err := genCommitMessage()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+	arg := os.Args[0]
+
+	if arg == "title" {
+		title, err := genGitHubTitle()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		fmt.Println(title)
+		return
 	}
 
-	fmt.Println(message)
+	if arg == "body" {
+		body, err := genGitHubBody()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		fmt.Println(body)
+		return
+	}
+
+	if arg == "commit" {
+		message, err := genCommitMessage()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		fmt.Println(message)
+		return
+	}
 }
 
 func genCommitMessage() (string, error) {
@@ -31,4 +58,41 @@ func genCommitMessage() (string, error) {
 	}
 
 	return message, nil
+}
+
+func genGitHubTitle() (string, error) {
+	gitDiff, err := lib.GetDiff("branch")
+	if err != nil {
+		return "", err
+	}
+
+	title, err := lib.CallOpenAI(
+		lib.GetGitHubTitlePrompt(gitDiff),
+	)
+	if err != nil {
+		return "", err
+	}
+
+	return title, nil
+}
+
+func genGitHubBody() (string, error) {
+	gitDiff, err := lib.GetEntireDiff()
+	if err != nil {
+		return "", err
+	}
+
+	jiraLink, err := lib.GetJiraLink()
+	if err != nil {
+		jiraLink = "none"
+	}
+
+	body, err := lib.CallOpenAI(
+		lib.GetGitHubBodyPrompt(gitDiff, jiraLink),
+	)
+	if err != nil {
+		return "", err
+	}
+
+	return body, nil
 }
