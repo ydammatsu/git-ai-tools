@@ -6,8 +6,26 @@ import (
 	"strings"
 )
 
-func GetDiff() (string, error) {
-	cmd := exec.Command("git", "diff", "HEAD")
+func GetDiff(opt string) (string, error) {
+	cmdLastArg := ""
+	if opt == "commit" {
+		cmdLastArg = "HEAD"
+	}
+	if opt == "branch" {
+		cmdLastArg = "origin/HEAD"
+	}
+	cmd := exec.Command("git", "diff", cmdLastArg)
+
+	output, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("error running `git diff`: %v", err)
+	}
+
+	return strings.TrimSpace(string(output)), nil
+}
+
+func GetEntireDiff() (string, error) {
+	cmd := exec.Command("git", "diff")
 
 	output, err := cmd.Output()
 	if err != nil {

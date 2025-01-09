@@ -18,7 +18,7 @@ func main() {
 }
 
 func genCommitMessage() (string, error) {
-	gitDiff, err := lib.GetDiff()
+	gitDiff, err := lib.GetDiff("commit")
 	if err != nil {
 		return "", err
 	}
