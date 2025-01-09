@@ -1,4 +1,4 @@
-module github.com/ydammatsu/commit-msg-ai
+module github.com/ydammatsu/git-ai-tools
 
 go 1.23.4
 
