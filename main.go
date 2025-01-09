@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	arg := os.Args[0]
+	arg := os.Args[1]
 
 	if arg == "title" {
 		title, err := genGitHubTitle()
@@ -42,9 +42,6 @@ func main() {
 		fmt.Println(message)
 		return
 	}
-
-	fmt.Println("Invalid argument")
-	os.Exit(1)
 }
 
 func genCommitMessage() (string, error) {
