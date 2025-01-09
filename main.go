@@ -77,7 +77,7 @@ func genGitHubTitle() (string, error) {
 }
 
 func genGitHubBody() (string, error) {
-	gitDiff, err := lib.GetEntireDiff()
+	gitDiff, err := lib.GetDiff("branch")
 	if err != nil {
 		return "", err
 	}
