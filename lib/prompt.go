@@ -16,7 +16,7 @@ var maxGitHubTitleLength = 40
 
 func GetGitHubTitlePrompt(gitDiff string) string {
 	return fmt.Sprintf(
-		"Generate a GitHub issue title based on the following git diff (in English, within %d characters):\n%s",
+		"Generate a GitHub issue title string one liner based on the following git diff (in English, within %d characters):\n%s",
 		maxGitHubTitleLength,
 		gitDiff,
 	)
