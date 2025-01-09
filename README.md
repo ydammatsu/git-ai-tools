@@ -1,2 +1,2 @@
-# commit-msg-ai
+# git-ai-tools
 TODO
