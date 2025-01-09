@@ -42,6 +42,9 @@ func main() {
 		fmt.Println(message)
 		return
 	}
+
+	fmt.Println("Invalid argument")
+	os.Exit(1)
 }
 
 func genCommitMessage() (string, error) {
