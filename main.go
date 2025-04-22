@@ -35,7 +35,12 @@ func main() {
 	if arg == "commit" {
 		message, err := genCommitMessage()
 		if err != nil {
-			fmt.Println(err)
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+			os.Exit(1)
+		}
+
+		if message == "" {
+			fmt.Fprintf(os.Stderr, "Error: Generated commit message is empty\n")
 			os.Exit(1)
 		}
 
